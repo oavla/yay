@@ -60,6 +60,7 @@
         background-color: #00796b;
         color: white;
         transition: background-color 0.3s, transform 0.2s;
+        margin: 5px; /* Added margin for spacing */
       }
 
       button:hover {
@@ -165,6 +166,7 @@
     <div class="container">
       <h1>Links Generator</h1>
       <button id="generateLinkBtn">Generate Link</button>
+      <button id="openWebsiteBtn">My own one</button> 
       <p class="note">Note: you can only generate a new link every 30 minutes.</p>
       <div id="linkContainer" class="link"></div>
       <p id="message" style="color: #d32f2f;"></p>
@@ -301,11 +303,9 @@
         linkContainer.classList.remove('visible');
         setTimeout(() => {
           linkContainer.innerHTML = `
-                    
-					
-					<span>${selectedLink}</span>
-					<button onclick="copyToClipboard('${selectedLink}')">Copy</button>
-                `;
+            <span>${selectedLink}</span>
+            <button onclick="copyToClipboard('${selectedLink}')">Copy</button>
+          `;
           linkContainer.classList.add('visible');
           document.getElementById('message').innerText = '';
         }, 300);
@@ -330,10 +330,16 @@
           console.error('Failed to copy: ', err);
         });
       }
+
+      document.getElementById('openWebsiteBtn').addEventListener('click', function() {
+        window.open('https://oav.pages.dev', '_blank'); 
+      });
+
       window.onload = function() {
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('alertBox').style.display = 'block';
       };
+
       document.getElementById('closeAlertBtn').addEventListener('click', function() {
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('alertBox').style.display = 'none';

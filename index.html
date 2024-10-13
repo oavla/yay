@@ -30,7 +30,7 @@
             text-align: center;
             background-color: #E5FFCF; 
             padding: 30px;
-            border-radius: 12px;
+            border-radius: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
             backdrop-filter: blur(10px); 
@@ -317,7 +317,7 @@
                 
                 if (seconds <= 0) {
                     clearInterval(countdownInterval);
-                    document.getElementById('message').innerText = ''; // Clear the message
+                    document.getElementById('message').innerText = ''; 
                 }
             }, 1000);
         }

@@ -299,8 +299,8 @@
             const lastGeneratedTime = localStorage.getItem('lastGeneratedTime');
             const currentTime = Date.now();
             
-            if (lastGeneratedTime && currentTime - lastGeneratedTime < 3600000) {
-                const remainingTime = Math.ceil((3600000 - (currentTime - lastGeneratedTime)) / 1000);
+            if (lastGeneratedTime && currentTime - lastGeneratedTime < 1800000) {
+                const remainingTime = Math.ceil((1800000 - (currentTime - lastGeneratedTime)) / 1000);
                 displayCountdown(remainingTime);
                 return;
             }

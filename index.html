@@ -160,8 +160,8 @@
         <h2>Read the rules:</h2>
         <p>1. Don't bookmark links.</p>
         <p>2. Don't share links.</p>
-        <p>3. Self explantory don't leak links!!!</p>
-        <p>Just click generate when u need new links :D</p>
+        <p>3. Self explanatory, don't leak links!!!</p>
+        <p>Just click generate when you need new links :D</p>
         <button id="closeAlertBtn">Understood 🫡</button>
     </div>
 
@@ -286,7 +286,7 @@
             
             if (lastGeneratedTime && currentTime - lastGeneratedTime < 3600000) {
                 const remainingTime = Math.ceil((3600000 - (currentTime - lastGeneratedTime)) / 1000);
-                document.getElementById('message').innerText = `Please wait ${remainingTime} seconds before generating a new link.`;
+                displayCountdown(remainingTime);
                 return;
             }
 
@@ -307,6 +307,20 @@
                 document.getElementById('message').innerText = '';
             }, 300); 
         });
+
+        function displayCountdown(seconds) {
+            document.getElementById('message').innerText = `Please wait ${seconds} seconds before generating a new link.`;
+            
+            const countdownInterval = setInterval(() => {
+                seconds--;
+                document.getElementById('message').innerText = `Please wait ${seconds} seconds before generating a new link.`;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('message').innerText = ''; // Clear the message
+                }
+            }, 1000);
+        }
 
         function copyToClipboard(link) {
             navigator.clipboard.writeText(link).then(() => {

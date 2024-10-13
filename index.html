@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>連結生成器</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; 
+            background-color: #4A6741;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+            background-color: #E5FFCF; 
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px); 
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #00796b;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            background-color: #00796b;
+            color: white;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #004d40;
+            transform: scale(1.05);
+        }
+
+        .link {
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(-50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .link.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: bounce 0.5s forwards;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(-50px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .link span {
+            font-size: 18px;
+            color: #555;
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+
+        .link span:hover {
+            transform: scale(1.1);
+        }
+
+        .note {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .alert-box {
+            display: none; 
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .alert-box h2 {
+            margin: 0 0 10px;
+            color: #00796b;
+        }
+
+        .alert-box p {
+            margin: 0 0 20px;
+        }
+
+        .alert-box button {
+            background-color: #00796b;
+            color: white;
+        }
+
+        .overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div> 
+    <div class="container">
+        <h1>Links Generator</h1>
+        <button id="generateLinkBtn">Generate Link</button>
+        <p class="note">Note: you can only generate a new link every hour.</p>
+        <p class="note">Links all self hosted by glorious king Kemp's!</p>
+        <div id="linkContainer" class="link"></div>
+        <p id="message" style="color: #d32f2f;"></p>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="alert-box" id="alertBox">
+        <h2>Read the rules:</h2>
+        <p>1. Don't bookmark links.</p>
+        <p>2. Don't share links.</p>
+        <p>3. Self explantory don't leak links!!!</p>
+        <p>Just click generate when u need new links :D</p>
+        <button id="closeAlertBtn">Understood 🫡</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 2
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        const links = [
+            'https://yayastroid.webconstructions.co.uk/',
+            'https://lol.webconstructions.co.uk/',
+            'https://rrrrrrrrrrr.webconstructions.co.uk/',
+            'https://inter.webconstructions.co.uk/',
+            'https://yayselenite.webconstructions.co.uk/'
+        ];
+
+        document.getElementById('generateLinkBtn').addEventListener('click', function() {
+            const lastGeneratedTime = localStorage.getItem('lastGeneratedTime');
+            const currentTime = Date.now();
+            
+            if (lastGeneratedTime && currentTime - lastGeneratedTime < 3600000) {
+                const remainingTime = Math.ceil((3600000 - (currentTime - lastGeneratedTime)) / 1000);
+                document.getElementById('message').innerText = `Please wait ${remainingTime} seconds before generating a new link.`;
+                return;
+            }
+
+            localStorage.setItem('lastGeneratedTime', currentTime);
+
+            const randomIndex = Math.floor(Math.random() * links.length);
+            const selectedLink = links[randomIndex];
+            const linkContainer = document.getElementById('linkContainer');
+
+            linkContainer.classList.remove('visible');
+
+            setTimeout(() => {
+                linkContainer.innerHTML = `
+                    <span>${selectedLink}</span>
+                    <button onclick="copyToClipboard('${selectedLink}')">Copy</button>
+                `;
+                linkContainer.classList.add('visible');
+                document.getElementById('message').innerText = '';
+            }, 300); 
+        });
+
+        function copyToClipboard(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        window.onload = function() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('alertBox').style.display = 'block';
+        };
+
+        document.getElementById('closeAlertBtn').addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('alertBox').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

@@ -128,6 +128,11 @@
         text-align: center;
       }
 
+      .alert-box:hover {
+        transform: translate(-50%, -50%) translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.6);
+      }
+
       .alert-box h2 {
         margin: 0 0 10px;
         color: white;
@@ -136,11 +141,6 @@
       .alert-box p {
         color: white;
         margin: 0 0 20px;
-      }
-
-      .alert-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.6);
       }
 
       .alert-box button {
@@ -302,6 +302,7 @@
         setTimeout(() => {
           linkContainer.innerHTML = `
                     
+					
 					<span>${selectedLink}</span>
 					<button onclick="copyToClipboard('${selectedLink}')">Copy</button>
                 `;

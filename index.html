@@ -176,7 +176,7 @@
     <div class="container">
       <h1>Easy. Simple. Fast.</h1>
       <button id="generateLinkBtn">Get a Link</button>
-      <button id="openWebsiteBtn">Other Project</button>
+      <button id="openWebsiteBtn">Or use THIS...</button>
       <p class="note">Note: you can only get 2 links every 30 minutes.</p>
       <div id="linkContainer" class="link"></div>
       <p id="message" style="color: #d32f2f;"></p>
@@ -187,7 +187,6 @@
       <p>1. Don't bookmark links.</p>
       <p>2. Don't share links.</p>
       <p>3. Self explanatory, don't leak links!!!</p>
-      <p>All links self hosted</p>
       <button id="closeAlertBtn">Yes King 🫡</button>
     </div>
     <div id="elapsedTime" class="elapsed-time"></div>
@@ -352,8 +351,8 @@
         setTimeout(() => {
           linkContainer.innerHTML = `
                 
-					<span>${selectedLink}</span>
-					<button onclick="copyToClipboard('${selectedLink}')">Copy</button>
+	<span>${selectedLink}</span>
+	<button onclick="copyToClipboard('${selectedLink}')">Copy</button>
             `;
           linkContainer.classList.add('visible');
           document.getElementById('message').innerText = '';
@@ -380,7 +379,7 @@
         });
       }
       document.getElementById('openWebsiteBtn').addEventListener('click', function() {
-        window.open('https://xn--229h.pages.dev/h', '_blank');
+        window.open('https://oav.pages.dev', '_blank');
       });
       window.onload = function() {
         shuffleArray(links);

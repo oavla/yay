@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
-    </meta>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </meta>
-    <title>
-      HTML Beautifier
-    </title>
+    <title>HTML Beautifier</title>
     <style>
-      body {
+        body {
             font-family: 'Courier New', monospace;
             margin: 20px;
             background-color: #1e1e1e;
@@ -71,30 +67,21 @@
             margin: 0;
         }
     </style>
-  </head>
-  <body>
-    <h1>
-      HTML Beautifier 3000
-    </h1>
-    <textarea id="inputHTML" placeholder="Paste your HTML here...">
-    </textarea>
-    <button id="beautifyButton">
-      Beautify
-    </button>
+</head>
+<body>
+    <h1>HTML Beautifier</h1>
+    <textarea id="inputHTML" placeholder="Paste your HTML here..."></textarea>
+    <button id="beautifyButton">Beautify</button>
     <div class="output-container">
-      <div class="output-header">
-        <h2>
-          Beautified HTML:
-        </h2>
-        <button id="copyButton">
-          Copy
-        </button>
-      </div>
-      <pre id="outputHTML">
-      </pre>
+        <div class="output-header">
+            <h2>Beautified HTML:</h2>
+            <button id="copyButton">Copy</button>
+        </div>
+        <pre id="outputHTML"></pre>
     </div>
+
     <script>
-      document.getElementById('beautifyButton').addEventListener('click', function() {
+        document.getElementById('beautifyButton').addEventListener('click', function() {
             const inputHTML = document.getElementById('inputHTML').value;
             const beautifiedHTML = beautifyHTML(inputHTML);
             document.getElementById('outputHTML').textContent = beautifiedHTML;
@@ -143,5 +130,5 @@
             return result.trim();
         }
     </script>
-  </body>
+</body>
 </html>

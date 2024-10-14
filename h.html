@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-  
-  <html lang="en">
-    
-    <head>
-      
-      <meta charset="UTF-8">
-        
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          
-          <title>
-            HTML Beautifier
-          </title>
-          
-          <style>
-            body {
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    </meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </meta>
+    <title>
+      HTML Beautifier
+    </title>
+    <style>
+      body {
             font-family: 'Courier New', monospace;
             margin: 20px;
             background-color: #1e1e1e;
@@ -24,7 +20,7 @@
             text-align: center;
         }
         textarea {
-            width: 98%;
+            width: 97%;
             height: 200px;
             padding: 10px;
             border: 1px solid #555;
@@ -74,44 +70,31 @@
         .output-header h2 {
             margin: 0;
         }
-          </style>
-          
-        </head>
-        
-        <body>
-          
-          <h1>
-            HTML Beautifier 3000
-          </h1>
-          
-          <textarea id="inputHTML" placeholder="Paste your HTML here...">
-          </textarea>
-          
-          <button id="beautifyButton">
-            Beautify
-          </button>
-          
-          <div class="output-container">
-            
-            <div class="output-header">
-              
-              <h2>
-                Beautified HTML:
-              </h2>
-              
-              <button id="copyButton">
-                Copy
-              </button>
-              
-            </div>
-            
-            <pre id="outputHTML">
-            </pre>
-            
-          </div>
-          
-          <script>
-            document.getElementById('beautifyButton').addEventListener('click', function() {
+    </style>
+  </head>
+  <body>
+    <h1>
+      HTML Beautifier 3000
+    </h1>
+    <textarea id="inputHTML" placeholder="Paste your HTML here...">
+    </textarea>
+    <button id="beautifyButton">
+      Beautify
+    </button>
+    <div class="output-container">
+      <div class="output-header">
+        <h2>
+          Beautified HTML:
+        </h2>
+        <button id="copyButton">
+          Copy
+        </button>
+      </div>
+      <pre id="outputHTML">
+      </pre>
+    </div>
+    <script>
+      document.getElementById('beautifyButton').addEventListener('click', function() {
             const inputHTML = document.getElementById('inputHTML').value;
             const beautifiedHTML = beautifyHTML(inputHTML);
             document.getElementById('outputHTML').textContent = beautifiedHTML;
@@ -129,37 +112,36 @@
         });
 
         function beautifyHTML(html) {
-            const indent = '  '; 
-            let result = '';
+            const indent = '  ';
+            let result = '<!DOCTYPE html>\n'; 
             let depth = 0;
 
-            const tags = html.split(/(
-            <\/?[^>
-              ]+>)/).filter(Boolean);
-            tags.forEach((part) => {
-                if (part.match(/^
-            </)) {
-                    if (part.match(/^<\/[^>
-            ]+>/)) { // Closing tag
-                        depth--;
-                        result += `${indent.repeat(depth)}${part.trim()}\n`;
-                    } else if (part.match(/^
-            <[^/][^>
-              ]*[^/]$/)) { 
-                        result += `${indent.repeat(depth)}${part.trim()}\n`;
-                        depth++;
-                    } else if (part.match(/\/>$/)) { 
-                        result += `${indent.repeat(depth)}${part.trim()}\n`;
-                    }
-                } else {
-                    result += `${indent.repeat(depth)}${part.trim()}\n`;
-                }
-            });
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
 
-            return result.trim(); 
+            function traverse(node) {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    result += `${indent.repeat(depth)}<${node.nodeName.toLowerCase()}`;
+                    Array.from(node.attributes).forEach(attr => {
+                        result += ` ${attr.name}="${attr.value}"`;
+                    });
+                    result += '>\n';
+                    depth++;
+                    Array.from(node.childNodes).forEach(child => traverse(child));
+                    depth--;
+                    result += `${indent.repeat(depth)}</${node.nodeName.toLowerCase()}>\n`;
+                } else if (node.nodeType === Node.TEXT_NODE) {
+                    const trimmedText = node.textContent.trim();
+                    if (trimmedText) {
+                        result += `${indent.repeat(depth)}${trimmedText}\n`;
+                    }
+                }
+            }
+
+            traverse(doc.documentElement); 
+
+            return result.trim();
         }
-            </script>
-            
-          </body>
-          
-        </html>
+    </script>
+  </body>
+</html>

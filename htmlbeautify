@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+  
+  <html lang="en">
+    
+    <head>
+      
+      <meta charset="UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          
+          <title>
+            HTML Beautifier
+          </title>
+          
+          <style>
+            body {
+            font-family: 'Courier New', monospace;
+            margin: 20px;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        textarea {
+            width: 97%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #252526;
+            color: #dcdcdc;
+            resize: vertical;
+            font-size: 14px;
+            outline: none;
+        }
+        textarea::placeholder {
+            color: #888;
+        }
+        button {
+            background-color: #007ACC;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+        pre {
+            background-color: #252526;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            overflow: auto;
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .output-container {
+            margin-top: 20px;
+        }
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .output-header h2 {
+            margin: 0;
+        }
+          </style>
+          
+        </head>
+        
+        <body>
+          
+          <h1>
+            HTML Beautifier
+          </h1>
+          
+          <textarea id="inputHTML" placeholder="Paste your HTML here...">
+          </textarea>
+          
+          <button id="beautifyButton">
+            Beautify
+          </button>
+          
+          <div class="output-container">
+            
+            <div class="output-header">
+              
+              <h2>
+                Beautified HTML:
+              </h2>
+              
+              <button id="copyButton">
+                Copy
+              </button>
+              
+            </div>
+            
+            <pre id="outputHTML">
+            </pre>
+            
+          </div>
+          
+          <script>
+            document.getElementById('beautifyButton').addEventListener('click', function() {
+            const inputHTML = document.getElementById('inputHTML').value;
+            const beautifiedHTML = beautifyHTML(inputHTML);
+            document.getElementById('outputHTML').textContent = beautifiedHTML;
+        });
+
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const outputHTML = document.getElementById('outputHTML').textContent;
+            navigator.clipboard.writeText(outputHTML)
+                .then(() => {
+                    alert('Copied to clipboard!');
+                })
+                .catch(err => {
+                    console.error('Could not copy text: ', err);
+                });
+        });
+
+        function beautifyHTML(html) {
+            const indent = '  '; 
+            let result = '';
+            let depth = 0;
+
+            const tags = html.split(/(
+            <\/?[^>
+              ]+>)/).filter(Boolean);
+            tags.forEach((part) => {
+                if (part.match(/^
+            </)) {
+                    if (part.match(/^<\/[^>
+            ]+>/)) { // Closing tag
+                        depth--;
+                        result += `${indent.repeat(depth)}${part.trim()}\n`;
+                    } else if (part.match(/^
+            <[^/][^>
+              ]*[^/]$/)) { 
+                        result += `${indent.repeat(depth)}${part.trim()}\n`;
+                        depth++;
+                    } else if (part.match(/\/>$/)) { 
+                        result += `${indent.repeat(depth)}${part.trim()}\n`;
+                    }
+                } else {
+                    result += `${indent.repeat(depth)}${part.trim()}\n`;
+                }
+            });
+
+            return result.trim(); 
+        }
+            </script>
+            
+          </body>
+          
+        </html>

@@ -167,7 +167,7 @@
     <h1>Easy. Simple. Fast.</h1>
     <button id="generateLinkBtn">Get a Link</button>
     <button id="openWebsiteBtn">Or use THIS...</button>
-    <p class="note">Note: you can only generate a new link every 30 minutes.</p>
+    <p class="note">Note: you can only get a new link every 30 minutes.</p>
     <div id="linkContainer" class="link"></div>
     <p id="message" style="color: #d32f2f;"></p>
 </div>
@@ -319,7 +319,7 @@
         if (usedLinks.length === links.length) {
             usedLinks = [];
             currentIndex = 0;
-            shuffleArray(links); // Shuffle again when resetting
+            shuffleArray(links); 
         }
 
         const selectedLink = links[currentIndex];
@@ -339,10 +339,10 @@
     });
 
     function displayCountdown(seconds) {
-        document.getElementById('message').innerText = `Please wait ${seconds} seconds before generating a new link.`;
+        document.getElementById('message').innerText = `Please wait ${seconds} seconds before getting a new link.`;
         const countdownInterval = setInterval(() => {
             seconds--;
-            document.getElementById('message').innerText = `Please wait ${seconds} seconds before generating a new link.`;
+            document.getElementById('message').innerText = `Please wait ${seconds} seconds before getting a new link.`;
             if (seconds <= 0) {
                 clearInterval(countdownInterval);
                 document.getElementById('message').innerText = '';

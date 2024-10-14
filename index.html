@@ -319,7 +319,7 @@
         if (usedLinks.length === links.length) {
             usedLinks = [];
             currentIndex = 0;
-            shuffleArray(links);
+            shuffleArray(links); // Shuffle again when resetting
         }
 
         const selectedLink = links[currentIndex];
@@ -363,6 +363,7 @@
     });
 
     window.onload = function() {
+        shuffleArray(links); 
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('alertBox').style.display = 'block';
     };

@@ -159,6 +159,16 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
+
+        .elapsed-time {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -181,6 +191,7 @@
     <p>👉 Add avylavy on Discord 👈</p>
     <button id="closeAlertBtn">Yes King 🫡</button>
 </div>
+<div id="elapsedTime" class="elapsed-time"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
 <script>
     particlesJS('particles-js', {
@@ -306,6 +317,23 @@
         }
     }
 
+    
+    const creationDate = new Date('2024-10-12T21:30:00'); 
+
+    function updateElapsedTime() {
+        const now = new Date();
+        const elapsed = Math.floor((now - creationDate) / 1000); 
+        const days = Math.floor(elapsed / (3600 * 24));
+        const hours = Math.floor((elapsed % (3600 * 24)) / 3600);
+        const minutes = Math.floor((elapsed % 3600) / 60);
+        const seconds = elapsed % 60;
+
+        document.getElementById('elapsedTime').innerText = 
+            `Website created: ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds ago.`;
+    }
+
+    setInterval(updateElapsedTime, 1000); 
+    
     document.getElementById('generateLinkBtn').addEventListener('click', function() {
         const lastGeneratedTime = localStorage.getItem('lastGeneratedTime');
         const currentTime = Date.now();
